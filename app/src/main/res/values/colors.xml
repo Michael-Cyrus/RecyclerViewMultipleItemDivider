@@ -3,4 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="red">#FF0000</color>
+    <color name="blue">#0000FF</color>
+    <color name="pink">#FFE6E6</color>
+    <color name="yellow">#F99503</color>
+    <color name="coffee">#6C5C50</color>
+    <color name="green">#5EC128</color>
+    <color name="white_press">#e3e3e3</color>
+    <color name="black">#000000</color>
 </resources>

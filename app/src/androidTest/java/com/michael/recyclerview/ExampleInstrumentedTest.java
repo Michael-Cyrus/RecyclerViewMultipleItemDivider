@@ -1,4 +1,4 @@
-package com.michael.recyclerviewmultipleitemdivider;
+package com.michael.recyclerview;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

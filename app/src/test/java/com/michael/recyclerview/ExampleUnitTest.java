@@ -1,4 +1,4 @@
-package com.michael.recyclerviewmultipleitemdivider;
+package com.michael.recyclerview;
 
 import org.junit.Test;
 
