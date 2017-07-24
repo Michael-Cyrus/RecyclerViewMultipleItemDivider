@@ -74,7 +74,7 @@ public class GridLayoutActivity extends BaseActivity {
                 Toast.makeText(context, bean.itemName, Toast.LENGTH_SHORT).show();
             }
         });
-        recyclerview.addItemDecoration(new DividerGridItemDecoration(this, manager));
+        recyclerview.addItemDecoration(new GridDivider(this));
         recyclerview.setLayoutManager(manager);
         recyclerview.setAdapter(adapter);
     }

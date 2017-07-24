@@ -51,8 +51,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
 //            spanCount = ((GridLayoutManager) layoutManager).getSpanCount();
             spanCount = manager.getSpanSizeLookup().getSpanSize(itemPosition) == manager.getSpanCount() ? 1 : manager.getSpanCount();
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-            spanCount = ((StaggeredGridLayoutManager) layoutManager)
-                    .getSpanCount();
+            spanCount = ((StaggeredGridLayoutManager) layoutManager).getSpanCount();
         }
         Log.e("GridItemDecoration", "getSpanCount, spanCount : " + spanCount);
         return spanCount;
@@ -62,14 +61,13 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
-            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
-                    .getLayoutParams();
+            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int left = child.getLeft() - params.leftMargin;
-            final int right = child.getRight() + params.rightMargin
-                    + mDivider.getIntrinsicWidth();
             final int top = child.getBottom() + params.bottomMargin;
+            final int right = child.getRight() + params.rightMargin+ mDivider.getIntrinsicWidth();
             final int bottom = top + mDivider.getIntrinsicHeight();
             mDivider.setBounds(left, top, right, bottom);
+            Log.e("GridItemDecoration", "drawHorizontal : left = "+ left+", top = "+ top +", right = "+right + ", bottom = " + bottom);
             mDivider.draw(c);
             if(mColorPaint != null) {
                 c.drawRect(left, top, right, bottom, mColorPaint);
@@ -82,12 +80,13 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
 
-            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
-                    .getLayoutParams();
-            final int top = child.getTop() - params.topMargin;
-            final int bottom = child.getBottom() + params.bottomMargin;
+            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int left = child.getRight() + params.rightMargin;
+            final int top = child.getTop() - params.topMargin;
             final int right = left + mDivider.getIntrinsicWidth();
+            final int bottom = child.getBottom() + params.bottomMargin+mDivider.getIntrinsicHeight();
+
+            Log.e("GridItemDecoration", "drawVertical : left = "+ left+", top = "+ top+", right = "+right + ", bottom = " + bottom);
 
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);
@@ -122,8 +121,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
 //                return true;
 //            }
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-            int orientation = ((StaggeredGridLayoutManager) layoutManager)
-                    .getOrientation();
+            int orientation = ((StaggeredGridLayoutManager) layoutManager).getOrientation();
             if (orientation == StaggeredGridLayoutManager.VERTICAL) {
                 if ((pos + 1) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
                 {
