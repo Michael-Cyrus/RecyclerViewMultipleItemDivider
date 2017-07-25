@@ -22,10 +22,8 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
     private final Paint mColorPaint;
     private Drawable mDivider;
-    private GridLayoutManager manager;
 
-    public DividerGridItemDecoration(Context context, GridLayoutManager manager) {
-        this.manager = manager;
+    public DividerGridItemDecoration(Context context) {
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDivider = a.getDrawable(0);
         a.recycle();
@@ -47,7 +45,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         int spanCount = -1;
         LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
-
+            GridLayoutManager manager = (GridLayoutManager)layoutManager;
 //            spanCount = ((GridLayoutManager) layoutManager).getSpanCount();
             spanCount = manager.getSpanSizeLookup().getSpanSize(itemPosition) == manager.getSpanCount() ? 1 : manager.getSpanCount();
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
@@ -107,6 +105,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
     private boolean isLastColum(RecyclerView parent, int pos, int spanCount, int childCount) {
         LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
+            GridLayoutManager manager = (GridLayoutManager)layoutManager;
             // 获取当前item 所在第几列
             int index = manager.getSpanSizeLookup().getSpanIndex(pos, spanCount);
             // 获取当前item 所在组第几行
