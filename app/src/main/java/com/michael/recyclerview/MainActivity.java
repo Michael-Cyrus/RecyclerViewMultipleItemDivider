@@ -29,6 +29,7 @@ public class MainActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_ll:
+                LinearLayoutActivity.startActivity(this);
                 break;
             case R.id.bt_gl:
                 GridLayoutActivity.startActivity(this);

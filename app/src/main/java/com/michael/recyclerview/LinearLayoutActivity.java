@@ -3,9 +3,10 @@ package com.michael.recyclerview;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -16,10 +17,10 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * Created by chenyao on 2017/7/24.
+ * Created by chenyao on 2017/7/26.
  */
 
-public class GridLayoutActivity extends BaseActivity {
+public class LinearLayoutActivity extends BaseActivity {
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
@@ -33,7 +34,7 @@ public class GridLayoutActivity extends BaseActivity {
     private List<WorkbenchBean.DataBean> dataList;
 
     public static void startActivity(Context context){
-        Intent intent = new Intent(context, GridLayoutActivity.class);
+        Intent intent = new Intent(context, LinearLayoutActivity.class);
         context.startActivity(intent);
     }
 
@@ -50,31 +51,20 @@ public class GridLayoutActivity extends BaseActivity {
 
 
     private void initView() {
-        toolbar.setTitle("网格布局");
+        toolbar.setTitle("线性布局");
         setSupportActionBar(toolbar);
         initSwipeRefreshLayout(swipRefresh);
         list = new ArrayList<>();
         dataList = new ArrayList<>();
-        adapter = new WorkbenchAdapter(this, 4);
-        GridLayoutManager manager = new GridLayoutManager(this, 4);
-        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                ItemBean itemBean = list.get(position);
-                if(itemBean.isTitle){
-                    return 4;
-                }else{
-                    return 1;
-                }
-            }
-        });
+        adapter = new WorkbenchAdapter(this, 1);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
         adapter.setItemClickListener(new WorkbenchAdapter.WorkbenchItemClick() {
             @Override
             public void imgItemClick(ItemBean bean) {
                 Toast.makeText(context, bean.itemName, Toast.LENGTH_SHORT).show();
             }
         });
-        recyclerview.addItemDecoration(new DividerGridItemDecoration(this));
+        recyclerview.addItemDecoration(new DividerLinearItemDecoration(this, LinearLayout.VERTICAL));
         recyclerview.setLayoutManager(manager);
         recyclerview.setAdapter(adapter);
     }
@@ -91,7 +81,7 @@ public class GridLayoutActivity extends BaseActivity {
             itemBean.isTitle = true;
             itemBean.title = dataBean.getTitle();
             list.add(itemBean);
-            for (int j = 0; j < dataBean.getInfo().size(); j++) {
+            for (int j = 0; j < 3; j++) {
                 WorkbenchBean.DataBean.InfoBean infoBean = dataBean.getInfo().get(j);
                 itemBean = new ItemBean();
                 itemBean.itemName = infoBean.getTitle();

@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".GridLayoutActivity"/>
+        <activity android:name=".LinearLayoutActivity" />
     </application>
 
 </manifest>

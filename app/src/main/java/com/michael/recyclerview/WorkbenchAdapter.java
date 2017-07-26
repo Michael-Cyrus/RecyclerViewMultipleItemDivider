@@ -25,11 +25,13 @@ public class WorkbenchAdapter extends RecyclerView.Adapter {
 
     private final LayoutInflater inflater;
     private final Context context;
+    private int spanCount;
     private List<ItemBean> dataList;
 
-    public WorkbenchAdapter(Context context) {
+    public WorkbenchAdapter(Context context, int spanCount) {
         inflater = LayoutInflater.from(context);
         this.context = context;
+        this.spanCount = spanCount;
     }
 
     public enum ITEM_TYPE {
@@ -123,7 +125,7 @@ public class WorkbenchAdapter extends RecyclerView.Adapter {
             super(itemView);
             ButterKnife.bind(this, itemView);
             int width = Util.getPhoneWidth(context);
-            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(width / 4, width / 4);
+            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(width / spanCount, ViewGroup.LayoutParams.WRAP_CONTENT);
             itemCl.setLayoutParams(params);
             ConstraintLayout.LayoutParams ivParams = (ConstraintLayout.LayoutParams) itemImg.getLayoutParams();
             int ivWidth = width / 5;

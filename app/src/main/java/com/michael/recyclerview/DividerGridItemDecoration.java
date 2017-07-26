@@ -8,13 +8,16 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 /**
+ * 为 Recyclerview 三种布局添加分割线
  * Created by chenyao on 2017/7/20.
  */
 
@@ -34,10 +37,22 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-
-        drawHorizontal(c, parent);
-        drawVertical(c, parent);
-
+        LayoutManager layoutManager = parent.getLayoutManager();
+        if (layoutManager == null) {
+            return;
+        }
+        if(layoutManager.getClass().getSimpleName().equals(LinearLayoutManager.class.getSimpleName())){
+            LinearLayoutManager manager = (LinearLayoutManager)layoutManager;
+            int orientation = manager.getOrientation();
+            if (orientation == LinearLayout.VERTICAL) {
+                drawHorizontal(c, parent);
+            }else {
+                drawVertical(c, parent);
+            }
+        }else {
+            drawHorizontal(c, parent);
+            drawVertical(c, parent);
+        }
     }
 
     private int getSpanCount(RecyclerView parent, int itemPosition) {
@@ -131,6 +146,16 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
                 if (pos >= childCount)// 如果是最后一列，则不需要绘制右边
                     return true;
             }
+        }else if(layoutManager instanceof LinearLayoutManager){
+            LinearLayoutManager manager = (LinearLayoutManager)layoutManager;
+            int orientation = manager.getOrientation();
+            if (orientation == LinearLayout.VERTICAL) {
+                return true;
+            }else{
+                if(pos == childCount - 1){
+                    return true;
+                }
+            }
         }
         return false;
     }
@@ -151,21 +176,28 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
             if (pos > childCount)// 如果是最后一行，则不需要绘制底部
                 return true;
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-            int orientation = ((StaggeredGridLayoutManager) layoutManager)
-                    .getOrientation();
+            int orientation = ((StaggeredGridLayoutManager) layoutManager).getOrientation();
             // StaggeredGridLayoutManager 且纵向滚动
             if (orientation == StaggeredGridLayoutManager.VERTICAL) {
                 childCount = childCount - childCount % spanCount;
                 // 如果是最后一行，则不需要绘制底部
                 if (pos >= childCount)
                     return true;
-            } else
-            // StaggeredGridLayoutManager 且横向滚动
-            {
+            } else {   // StaggeredGridLayoutManager 且横向滚动
                 // 如果是最后一行，则不需要绘制底部
                 if ((pos + 1) % spanCount == 0) {
                     return true;
                 }
+            }
+        }else if(layoutManager instanceof LinearLayoutManager){
+            LinearLayoutManager manager = (LinearLayoutManager)layoutManager;
+            int orientation = manager.getOrientation();
+            if (orientation == LinearLayout.VERTICAL) {
+                if(pos == childCount - 1){
+                    return true;
+                }
+            }else{
+                return true;
             }
         }
         return false;
@@ -173,19 +205,30 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
-        Log.e("getItemOffsets", "过时的 getItemOffsets ");
+        LayoutManager layoutManager = parent.getLayoutManager();
         int spanCount = getSpanCount(parent, itemPosition);
         int childCount = parent.getAdapter().getItemCount();
-        if (isLastRaw(parent, itemPosition, spanCount, childCount)) {   // 如果是最后一行，则不需要绘制底部
-            outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
-        } else if (isLastColum(parent, itemPosition, spanCount, childCount)) {  // 如果是最后一列，则不需要绘制右边
-            Log.e("getItemOffsets", "mDivider.getIntrinsicHeight() : "+ mDivider.getIntrinsicHeight());
-            outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
-        } else {
-            Log.e("getItemOffsets", "mDivider.getIntrinsicWidth() : "+ mDivider.getIntrinsicWidth());
-            outRect.set(0, 0, mDivider.getIntrinsicWidth(), mDivider.getIntrinsicHeight());
+        if(layoutManager.getClass().getSimpleName().equals(LinearLayoutManager.class.getSimpleName())) {
+            LinearLayoutManager manager = (LinearLayoutManager)layoutManager;
+            int orientation = manager.getOrientation();
+            if (orientation == LinearLayout.VERTICAL) {
+                outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+            } else {
+                outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
+            }
+        }else {
+            if (isLastRaw(parent, itemPosition, spanCount, childCount)) {   // 如果是最后一行，则不需要绘制底部
+                Log.e("getItemOffsets", "isLastRaw, itemPosition : " + itemPosition);
+                outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
+            } else if (isLastColum(parent, itemPosition, spanCount, childCount)) {  // 如果是最后一列，则不需要绘制右边
+                Log.e("getItemOffsets", "isLastColum, itemPosition : " + itemPosition);
+                outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+            } else {
+                Log.e("getItemOffsets", "else, itemPosition : " + itemPosition);
+                outRect.set(0, 0, mDivider.getIntrinsicWidth(), mDivider.getIntrinsicHeight());
+            }
+//            outRect.set(0, 0, mDivider.getIntrinsicWidth(), mDivider.getIntrinsicHeight());
         }
-//        outRect.set(0, 0, mDivider.getIntrinsicWidth(), mDivider.getIntrinsicHeight());
     }
 
     @Override
