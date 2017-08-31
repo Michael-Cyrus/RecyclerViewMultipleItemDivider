@@ -55,7 +55,7 @@ public class GridLayoutActivity extends BaseActivity {
         initSwipeRefreshLayout(swipRefresh);
         list = new ArrayList<>();
         dataList = new ArrayList<>();
-        adapter = new WorkbenchAdapter(this, 4);
+        adapter = new WorkbenchAdapter(this, 4, recyclerview);
         GridLayoutManager manager = new GridLayoutManager(this, 4);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override

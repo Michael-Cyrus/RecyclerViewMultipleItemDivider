@@ -14,10 +14,13 @@
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipRefresh"
+        android:padding="10dp"
+        android:background="@color/blue"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
+            android:background="@color/coffee"
             android:padding="15dp"
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"

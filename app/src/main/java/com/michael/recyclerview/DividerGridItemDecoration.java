@@ -32,7 +32,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         a.recycle();
         //绘制颜色分割线的画笔
         mColorPaint = new Paint();
-        mColorPaint.setColor(ContextCompat.getColor(context, R.color.green));
+        mColorPaint.setColor(ContextCompat.getColor(context, R.color.red));
     }
 
     @Override
@@ -77,7 +77,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int left = child.getLeft() - params.leftMargin;
             final int top = child.getBottom() + params.bottomMargin;
-            final int right = child.getRight() + params.rightMargin+ mDivider.getIntrinsicWidth();
+            final int right = child.getRight() + params.rightMargin;
             final int bottom = top + mDivider.getIntrinsicHeight();
             mDivider.setBounds(left, top, right, bottom);
             Log.e("GridItemDecoration", "drawHorizontal : left = "+ left+", top = "+ top +", right = "+right + ", bottom = " + bottom);
@@ -85,6 +85,20 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
             if(mColorPaint != null) {
                 c.drawRect(left, top, right, bottom, mColorPaint);
             }
+        }
+    }
+
+    private void drawHorizontal2(Canvas c, RecyclerView parent) {
+        int count = parent.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View childView = parent.getChildAt(i);
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) childView.getLayoutParams();
+            int left = childView.getLeft() - params.leftMargin;
+            int right = childView.getRight() + params.rightMargin;
+            int top = childView.getBottom() + params.bottomMargin;
+            int bottom = top + mDivider.getIntrinsicHeight();
+            mDivider.setBounds(left, top, right, bottom);
+            mDivider.draw(c);
         }
     }
 
@@ -97,7 +111,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
             final int left = child.getRight() + params.rightMargin;
             final int top = child.getTop() - params.topMargin;
             final int right = left + mDivider.getIntrinsicWidth();
-            final int bottom = child.getBottom() + params.bottomMargin+mDivider.getIntrinsicHeight();
+            final int bottom = child.getBottom() + params.bottomMargin;
 
             Log.e("GridItemDecoration", "drawVertical : left = "+ left+", top = "+ top+", right = "+right + ", bottom = " + bottom);
 
@@ -106,6 +120,20 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
             if(mColorPaint != null) {
                 c.drawRect(left, top, right, bottom, mColorPaint);
             }
+        }
+    }
+
+    private void drawVertical2(Canvas c, RecyclerView parent) {
+        int count = parent.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View childView = parent.getChildAt(i);
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) childView.getLayoutParams();
+            int left = childView.getRight() + params.rightMargin;
+            int right = left + mDivider.getIntrinsicWidth();
+            int top = childView.getTop() - params.topMargin;
+            int bottom = childView.getBottom() + params.bottomMargin;
+            mDivider.setBounds(left, top, right, bottom);
+            mDivider.draw(c);
         }
     }
 

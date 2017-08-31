@@ -56,7 +56,7 @@ public class LinearLayoutActivity extends BaseActivity {
         initSwipeRefreshLayout(swipRefresh);
         list = new ArrayList<>();
         dataList = new ArrayList<>();
-        adapter = new WorkbenchAdapter(this, 1);
+        adapter = new WorkbenchAdapter(this, 1, recyclerview);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         adapter.setItemClickListener(new WorkbenchAdapter.WorkbenchItemClick() {
             @Override

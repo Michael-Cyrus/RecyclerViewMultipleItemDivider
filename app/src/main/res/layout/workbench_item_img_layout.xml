@@ -5,7 +5,7 @@
     android:id="@+id/item_cl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/selector_bg">
+    android:background="@color/blue">
 
     <ImageView
         android:id="@+id/item_img"
