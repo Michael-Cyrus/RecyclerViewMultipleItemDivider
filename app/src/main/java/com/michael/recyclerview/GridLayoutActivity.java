@@ -28,7 +28,7 @@ public class GridLayoutActivity extends BaseActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    private WorkbenchAdapter adapter;
+    private WorkbenchAdapter2 adapter;
     private List<ItemBean> list;
     private List<WorkbenchBean.DataBean> dataList;
 
@@ -55,7 +55,7 @@ public class GridLayoutActivity extends BaseActivity {
         initSwipeRefreshLayout(swipRefresh);
         list = new ArrayList<>();
         dataList = new ArrayList<>();
-        adapter = new WorkbenchAdapter(this, 4, recyclerview);
+        adapter = new WorkbenchAdapter2(this, 4, recyclerview);
         GridLayoutManager manager = new GridLayoutManager(this, 4);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -68,7 +68,7 @@ public class GridLayoutActivity extends BaseActivity {
                 }
             }
         });
-        adapter.setItemClickListener(new WorkbenchAdapter.WorkbenchItemClick() {
+        adapter.setItemClickListener(new WorkbenchAdapter2.WorkbenchItemClick() {
             @Override
             public void imgItemClick(ItemBean bean) {
                 Toast.makeText(context, bean.itemName, Toast.LENGTH_SHORT).show();

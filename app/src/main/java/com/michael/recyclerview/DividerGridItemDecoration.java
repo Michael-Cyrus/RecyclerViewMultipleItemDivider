@@ -37,6 +37,26 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+//        LayoutManager layoutManager = parent.getLayoutManager();
+//        if (layoutManager == null) {
+//            return;
+//        }
+//        if(layoutManager.getClass().getSimpleName().equals(LinearLayoutManager.class.getSimpleName())){
+//            LinearLayoutManager manager = (LinearLayoutManager)layoutManager;
+//            int orientation = manager.getOrientation();
+//            if (orientation == LinearLayout.VERTICAL) {
+//                drawHorizontal(c, parent);
+//            }else {
+//                drawVertical(c, parent);
+//            }
+//        }else {
+//            drawHorizontal(c, parent);
+//            drawVertical(c, parent);
+//        }
+    }
+
+    @Override
+    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager == null) {
             return;
@@ -250,7 +270,8 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
                 outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
             } else if (isLastColum(parent, itemPosition, spanCount, childCount)) {  // 如果是最后一列，则不需要绘制右边
                 Log.e("getItemOffsets", "isLastColum, itemPosition : " + itemPosition);
-                outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+//                outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+                outRect.set(0, 0, 0, 0);
             } else {
                 Log.e("getItemOffsets", "else, itemPosition : " + itemPosition);
                 outRect.set(0, 0, mDivider.getIntrinsicWidth(), mDivider.getIntrinsicHeight());

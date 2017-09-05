@@ -127,13 +127,14 @@ public class WorkbenchAdapter extends RecyclerView.Adapter {
             super(itemView);
             ButterKnife.bind(this, itemView);
             int width = recyclerview.getMeasuredWidth() - recyclerview.getPaddingLeft()*2;
-            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(width / spanCount, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(width / 4, width / 4);
             itemCl.setLayoutParams(params);
             ConstraintLayout.LayoutParams ivParams = (ConstraintLayout.LayoutParams) itemImg.getLayoutParams();
-            int ivWidth = width / 5;
+            int ivWidth = width / 8;
             ivParams.height = ivWidth;
             ivParams.width = ivWidth;
             itemImg.setLayoutParams(ivParams);
+
         }
     }
 }
