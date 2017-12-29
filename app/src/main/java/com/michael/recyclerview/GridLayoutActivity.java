@@ -91,13 +91,20 @@ public class GridLayoutActivity extends BaseActivity {
             itemBean.isTitle = true;
             itemBean.title = dataBean.getTitle();
             list.add(itemBean);
-            for (int j = 0; j < dataBean.getInfo().size(); j++) {
+            int size = dataBean.getInfo().size();
+            for (int j = 0; j < size; j++) {
                 WorkbenchBean.DataBean.InfoBean infoBean = dataBean.getInfo().get(j);
                 itemBean = new ItemBean();
                 itemBean.itemName = infoBean.getTitle();
                 itemBean.url = infoBean.getImg();
                 itemBean.order = infoBean.getOrder();
                 list.add(itemBean);
+            }
+            if(size % 4 != 0){
+                for (int j = 0; j < 4 - size % 4; j++) {
+                    itemBean = new ItemBean();
+                    list.add(itemBean);
+                }
             }
         }
         adapter.setData(list);
